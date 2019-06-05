@@ -41,15 +41,15 @@ module.exports = {
         })
     },
 
-    login: (req, res) => {
-        passport.authenticate('local', {
-            successRedirect: '/dashboard',
-            failureRedirect: '/users/login',
-            failureFlash: true
-        }), (req, res, next);
-    },
+    // login: (req, res) => {
+    //     passport.authenticate('local', {
+    //         successRedirect: '/dashboard',
+    //         failureRedirect: '/users/login',
+    //         failureFlash: true
+    //     }), (req, res, next);
+    // },
 
-    authentication: (req, res) => {
+    login: (req, res) => {
         User.findOne({email: req.body.email},(err, user) => {
             if (!user) {
                 res.json({msg:'This user is not registered'});
@@ -65,17 +65,17 @@ module.exports = {
                     //     // console.log(util.inspect(req.session, {showHidden: false, depth: null}))
                     //     res.json({message:'User is now logged in', user});
                     if (isMatch) {
-                        const token = jwt.sign(user.toJSON(), database.secretKey, { //Expected "payload" to be a plain object.
-                            expiresIn: 60000,
+                        jwt.sign(user.toJSON(), database.secretKey, {expiresIn:'1h'}, (err, token) => { //Expected "payload" to be a plain object.
+                            res.json({
+                                msg:'User is now logged in', 
+                                token:'JWT ' + token,
+                                user: {
+                                    id:user._id,
+                                    first_name:user.first_name,
+                                    email:user.email
+                                }
+                            });
                         });
-                        res.json({
-                            msg:'User is now logged in', 
-                            token: "JWT " + token,
-                            user: {
-                                id:user._id,
-                                first_name:user.first_name,
-                                email:user.email
-                            }});
                     } else {
                         res.json({msg:'Invalid email/password'})
                     }

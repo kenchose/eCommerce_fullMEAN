@@ -48,7 +48,8 @@ require('./server/config/passport')(passport);
 // Set Static Folder //
 app.use(express.static(__dirname + '/dist/public'));
 
+app.all("*", (req,res,next) => {
+    res.sendFile(path.resolve("./dist/public/index.html"))
+  });
 
-app.listen(8000, () => {
-    console.log("Running on port 8000 eCommerce");
-})
+app.listen(8000, () => console.log("Running on port 8000 eCommerce"))

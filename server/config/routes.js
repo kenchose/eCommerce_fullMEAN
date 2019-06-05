@@ -14,8 +14,8 @@ const router = express.Router();
     router.post('/register', (req, res) => {
         user.register(req, res);
     })
-    router.post('/authentication', (req, res) => {
-        user.authentication(req, res);
+    router.post('/login', (req, res) => {
+        user.login(req, res);
     })
     router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res) => {
         user.profile(req, res);

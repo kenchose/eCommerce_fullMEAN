@@ -11,7 +11,6 @@ module.exports = (passport) => {
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt") //passing token by using auth-header
     opts.secretOrKey = database.secretKey;
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
-        console.log("This is the jwt payload ", jwt_payload);
         User.findById(jwt_payload._id, (err, user) => {
             if(err){
                 return done(err, false);
