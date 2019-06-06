@@ -34,13 +34,13 @@ let UserSchema = new mongoose.Schema({
     password_confirmation:{
         type:String,
         required:[true, "Password confirmation is required."],
-        // validate: [{
-        //     validator: (value) => {
-        //         return value == this.password;
-        //     }, msg:'Password and password confirmation do not match.'
-        // }]
+        validate: [{
+            validator: (value) => {
+                return value != this.password;
+            }, msg:'Password and password confirmation do not match.'
+        }]
     }
-})
+},  {timestamp:true})
 
 
 mongoose.model('User', UserSchema);

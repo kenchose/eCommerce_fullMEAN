@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ValidateService } from './validate.service';
+import { FlashMessagesModule } from 'angular2-flash-messages';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +14,7 @@ import { IndexComponent } from './components/index/index.component';
 import { HomeComponent } from './components/home/home.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterloginComponent } from './components/registerlogin/registerlogin.component';
 
 @NgModule({
   declarations: [
@@ -20,14 +24,16 @@ import { RegisterComponent } from './components/register/register.component';
     HomeComponent,
     CartComponent,
     ProfileComponent,
-    RegisterComponent,
+    RegisterloginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    FlashMessagesModule.forRoot()
   ],
-  providers: [HttpService],
+  providers: [HttpService, ValidateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

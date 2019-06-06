@@ -1,0 +1,121 @@
+<div class="container">
+	<p>First name: {{first_name.errors | json }} Valid? {{first_name.valid | json}}</p>
+	<p>Last name: {{last_name.errors | json }} Valid? {{last_name.valid | json}}</p>
+	<p>Email: {{email.errors | json }} Valid? {{email.valid | json }}</p>
+	<p>Password: {{password.errors | json }} Valid? {{password.valid | json }}</p>
+	<p>Password Confirmation: {{password_confirmation.errors | json }} Valid? {{password_confirmation.valid | json }}</p>
+	<div class="form-container">
+	<h2 class='text-center p-3'>Sign Up</h2>
+	<form (submit)='componentRegister()' #formData='ngForm'>
+		<div class="form-group row justify-content-center">
+			<div class="col-md-8">
+				<input type="text" class="form-control" placeholder="First name"
+				required
+				name='newUser.first_name' 
+				[(ngModel)]='newUser.first_name'
+				#first_name="ngModel">
+				<div *ngIf='!first_name.valid && first_name.dirty '> 
+					<p>First name is required.</p>
+				</div>
+			</div>
+		</div>
+		<div class="form-group row justify-content-center">
+			<div class="col-md-8">
+				<input type="text" class="form-control" placeholder="Last name"
+				required
+				name='newUser.last_name' 
+				[(ngModel)]='newUser.last_name' 
+				#last_name='ngModel'>
+				<div *ngIf='!last_name.valid && last_name.dirty '> 
+					<p>Last name is required.</p>
+				</div>
+			</div>
+		</div>  
+		<div class="form-group row justify-content-center">
+			<div  class="col-md-8">
+				<input type="email" class="form-control"  placeholder="Email"
+				required
+				name='newUser.email' 
+				pattern='^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$'
+				[(ngModel)]='newUser.email' 
+				#email='ngModel'>
+				<div *ngIf='!email.valid && email.dirty'>
+					<p>Email must be in correct format.</p>
+				</div>
+			</div>
+		</div>
+		<div  class="form-group row justify-content-center">
+			<div class="col-md-8">
+				<input type="password" class="form-control" placeholder="Password" 
+				required
+				name='newUser.password' 
+				minlength='8'
+				pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$'
+				[(ngModel)]='newUser.password' 
+				#password='ngModel'>
+				<div *ngIf='!password.valid && password.dirty '> 
+					<p>Password must be 8 characters with one special character and number.</p>
+				</div>
+			</div>
+		</div>
+		<div  class="form-group row justify-content-center">
+			<div class="col-md-8">
+				<input id="password" type="password" class="form-control" placeholder="Password Confirmation" 
+				required
+				name='newUser.password_confirmation'
+				minlength='8'
+				pattern='^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$'
+				identical=#password
+				[(ngModel)]='newUser.password_confirmation' 
+				#password_confirmation='ngModel'>
+				<div *ngIf='!password_confirmation.valid && password_confirmation.dirty'> 
+					<p>Password and password confirmation do not match.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<p><button (click)="clearField()"  class='btn' id='cancel-btn'>Cancel</button></p>
+			<p><button type="submit" class='btn btn-danger' >Create</button></p>
+			<!-- <p><button type="submit" class='btn btn-danger' [disabled]='formData.invalid'>Create</button></p> -->
+		</div>
+	</form>
+</div>
+
+        <div *ngFor='let error of errors'>
+            <p><i class="fas fa-times"></i> {{error}}</p>
+        </div>  
+
+
+
+<!-- <div class="container">
+	<form (submit)='registerUser' action="/user/register" method="post">
+		<label for="first_name">First Name</label>
+		<div class="form-row">
+			<div class="col-md-5">
+				<input class='from-control' type="text" [(ngModel)]='newUser.first_name' name='newUser.first_name'>
+			</div>
+			<label for="last_name">Last name</label>
+			<div class="col-md-5">
+				<input class='from-control' type="text" [(ngModel)]='newUser.last_name' name='newUser.last_name'>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-md-6">
+				<label for="email">Email</label>
+				<input class='form-control' type="text" [(ngModel)]='newUser.email' name='newUser.email'>
+			</div>
+		</div>
+		<div class="form-row">
+			<label for="password">Password</label>
+			<div class="col-md-5">
+				<label for="password">Password</label>
+				<input class='form-control' type="text" [(ngModel)]='newUser.password' name='newUser.password'>
+			</div>
+			<div class="col-md-5">
+				<label for="password_confirmation">Password Confirmation</label>
+				<input class='form-control' type='text' [(ngModel)]='newUser.password_confirmation' name='newUser.password_confirmation'>
+			</div>
+		</div>
+		<button type='submit'>Register</button>
+	</form>
+</div> -->

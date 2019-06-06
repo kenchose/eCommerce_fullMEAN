@@ -11,7 +11,7 @@ const router = express.Router();
     // router.get('/dashboard', ensurAuthenticated, (req, res) => {
     //     user.dashboard(req, res);
     // })
-    router.post('/register', (req, res) => {
+    router.post('/create', (req, res) => {
         user.register(req, res);
     })
     router.post('/login', (req, res) => {
