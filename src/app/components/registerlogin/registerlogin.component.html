@@ -76,6 +76,7 @@
 			<!-- <p><button type="submit" class='btn btn-danger' [disabled]='formData.invalid'>Create</button></p> -->
 		</div>
 	</form>
+<<<<<<< HEAD
 
         <hr>
         
@@ -108,3 +109,10 @@
         </form>
         <!-- {{csrfToken}} -->
     </div>
+=======
+</div>
+
+        <div *ngFor='let error of errors'>
+            <p><i class="fas fa-times"></i> {{error}}</p>
+        </div>  
+>>>>>>> origin/master
