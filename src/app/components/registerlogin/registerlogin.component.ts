@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from './../../http.service';
 import { Router } from '@angular/router'
-import { ValidateService } from './../../validate.service';
+// import { AuthService } from './../../auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages'
 
 @Component({
@@ -13,9 +13,9 @@ export class RegisterloginComponent implements OnInit {
   newUser:any;
   constructor(
     private _httpService:HttpService, 
-    private router:Router, 
-    private _validateService:ValidateService, 
-    private _flashMessage:FlashMessagesService
+    private _router:Router, 
+    private _flashMessage:FlashMessagesService,
+    // private _authService:AuthService
     ) { 
     this.newUser = {first_name:'', last_name:'', email:'', password:'', password_confirmation:''}
   }
@@ -23,15 +23,29 @@ export class RegisterloginComponent implements OnInit {
   }
 
   componentRegister(){
-    let user = this.newUser
-    if(!this._validateService.validatePasswordConfirmation(user)){
-      this._flashMessage.show("Password and password confirmation do not match.", {cssClass: 'alert-danger', timeout:8000});
-      return false;
-    }
     let obs = this._httpService.register(this.newUser);
+    if(this.newUser.password != this.newUser.password_confirmation){
+      this._flashMessage.show("Password and password confirmation do not match.", {cssClass: 'alert-danger', timeout:8000});
+      // this._router.navigate['/registerlogin'];
+    } else {
+
+      this._flashMessage.show("Password match.", {cssClass: 'alert-success', timeout:8000});
+    }
     obs.subscribe((data) => {
-      console.log(data)
+
+
+      // this._authService.registerUser(data)
+      // .subscribe(user => {
+      //   if(user.success){
+      //     this._flashMessage.show("Successfully registered", {cssClass: 'alert-success', timeout:8000});
+      //     console.log("successfully pass auth" + user);
+      //   } else {
+      //     this._flashMessage.show("WARNING DID NOT Successfully REGISETR", {cssClass: 'alert-danger', timeout:8000});
+      //     this._router.navigate['/register'];
+      //   }
+      // })
       this.newUser = {first_name:'', last_name:'', email:'', password:'', password_confirmation:''};
+      // this._router.navigate['/login'];
     });
   }
 }

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+let User = mongoose.model('User');
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const database = require('./../config/mongoose');
-let User = mongoose.model('User');
 
 module.exports = {
     getAll: (req, res) => {
@@ -18,28 +18,28 @@ module.exports = {
     },
 
     register: (req, res) => {
-        // let newUser = new User(req.body);
-        // console.log(newUser);
-        // req.check('password', "Password and password confirmation do not match").equals(req.body.password_confirmation);
-        // bcrypt.genSalt(10, (err, salt) => { 
-        //     if (err) {
-        //         for(let key in err.errors){
-        //             req.flash('registration', err.errors[key].message);
-        //         }
-        //         res.json({message:"Couldn't create salt", err})
-        //     } else {
-        //         bcrypt.hash(req.body.password, salt, (err, hash) => {
-        //             newUser.password = hash
-        //         });
-        //     }
-        // });
-        // newUser.save((err, newUser) => {
-        //     if (err) {
-        //         res.json({msg:"Failed to register user.", err});
-        //     } else {
-        //         res.json({msg:"User successfully registered.", newUser})
-        //     }
-        // })
+        let newUser = new User(req.body);
+        // console.log("User data from controller " + newUser);
+        req.check('password', "Password and password confirmation do not match").equals(req.body.password_confirmation);
+        bcrypt.genSalt(10, (err, salt) => { 
+            if (err) {
+                for(let key in err.errors){
+                    req.flash('registration', err.errors[key].message);
+                }
+                res.json({message:"Couldn't create salt", err})
+            } else {
+                bcrypt.hash(req.body.password, salt, (err, hash) => {
+                    newUser.password = hash
+                });
+            }
+        });
+        newUser.save((err, newUser) => {
+            if (err) {
+                res.json({msg:"Failed to register user.", err});
+            } else {
+                res.json({msg:"User successfully registered.", newUser})
+            }
+        })
     },
 
     // login: (req, res) => {

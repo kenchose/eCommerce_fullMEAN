@@ -31,15 +31,15 @@ let UserSchema = new mongoose.Schema({
             }, msg: 'Minimum eight characters, at least one letter, one number and one special character.'
         }]
     },
-    password_confirmation:{
-        type:String,
-        required:[true, "Password confirmation is required."],
-        validate: [{
-            validator: (value) => {
-                return value != this.password;
-            }, msg:'Password and password confirmation do not match.'
-        }]
-    }
+    // password_confirmation:{
+    //     type:String,
+    //     required:[true, "Password confirmation is required."],
+    //     validate: [{
+    //         validator: (value) => {
+    //             return value != this.password;
+    //         }, msg:'Password and password confirmation do not match.'
+    //     }]
+    // }
 },  {timestamp:true})
 
 

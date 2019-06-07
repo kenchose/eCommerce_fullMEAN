@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ValidateService } from './validate.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+// import { AuthService } from './auth.service';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,7 +34,8 @@ import { RegisterloginComponent } from './components/registerlogin/registerlogin
     FormsModule,
     FlashMessagesModule.forRoot()
   ],
-  providers: [HttpService, ValidateService],
+  providers: [HttpService],
+  // providers: [HttpService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

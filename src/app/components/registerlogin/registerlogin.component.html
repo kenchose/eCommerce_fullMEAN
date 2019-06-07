@@ -3,7 +3,7 @@
 	<p>Last name: {{last_name.errors | json }} Valid? {{last_name.valid | json}}</p>
 	<p>Email: {{email.errors | json }} Valid? {{email.valid | json }}</p>
 	<p>Password: {{password.errors | json }} Valid? {{password.valid | json }}</p>
-	<p>Password Confirmation: {{password_confirmation.errors | json }} Valid? {{password_confirmation.valid | json }}</p>
+	<!-- <p>Password Confirmation: {{password_confirmation.errors | json }} Valid? {{password_confirmation.valid | json }}</p> -->
 	<div class="form-container">
 	<h2 class='text-center p-3'>Sign Up</h2>
 	<form (submit)='componentRegister()' #formData='ngForm'>
@@ -68,13 +68,10 @@
 				identical=#password
 				[(ngModel)]='newUser.password_confirmation' 
 				#password_confirmation='ngModel'>
-				<div *ngIf='!password_confirmation.valid && password_confirmation.dirty'> 
-					<p>Password and password confirmation do not match.</p>
-				</div>
 			</div>
 		</div>
 		<div class="row justify-content-center">
-			<p><button (click)="clearField()"  class='btn' id='cancel-btn'>Cancel</button></p>
+			<!-- <p><button (click)="clearField()"  class='btn' id='cancel-btn'>Cancel</button></p> -->
 			<p><button type="submit" class='btn btn-danger' >Create</button></p>
 			<!-- <p><button type="submit" class='btn btn-danger' [disabled]='formData.invalid'>Create</button></p> -->
 		</div>
@@ -84,38 +81,3 @@
         <div *ngFor='let error of errors'>
             <p><i class="fas fa-times"></i> {{error}}</p>
         </div>  
-
-
-
-<!-- <div class="container">
-	<form (submit)='registerUser' action="/user/register" method="post">
-		<label for="first_name">First Name</label>
-		<div class="form-row">
-			<div class="col-md-5">
-				<input class='from-control' type="text" [(ngModel)]='newUser.first_name' name='newUser.first_name'>
-			</div>
-			<label for="last_name">Last name</label>
-			<div class="col-md-5">
-				<input class='from-control' type="text" [(ngModel)]='newUser.last_name' name='newUser.last_name'>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-md-6">
-				<label for="email">Email</label>
-				<input class='form-control' type="text" [(ngModel)]='newUser.email' name='newUser.email'>
-			</div>
-		</div>
-		<div class="form-row">
-			<label for="password">Password</label>
-			<div class="col-md-5">
-				<label for="password">Password</label>
-				<input class='form-control' type="text" [(ngModel)]='newUser.password' name='newUser.password'>
-			</div>
-			<div class="col-md-5">
-				<label for="password_confirmation">Password Confirmation</label>
-				<input class='form-control' type='text' [(ngModel)]='newUser.password_confirmation' name='newUser.password_confirmation'>
-			</div>
-		</div>
-		<button type='submit'>Register</button>
-	</form>
-</div> -->

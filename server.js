@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const flash = require('express-flash');
 const passport = require('passport');
-// const session = require('express-session');
+const session = require('express-session');
 const mongooseDatabase = require('./server/config/mongoose');
 const expressValidator = require('express-validator');
 const userRoutes = require('./server/config/routes');
@@ -16,12 +16,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(expressValidator());
-// app.use(session({
-//     secret: 'thisisasecret',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {maxAge: 60000}
-// }))
+app.use(session({
+    secret: 'thisisasecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {maxAge: 60000}
+}))
 
 mongoose.connect(mongooseDatabase.database, { useCreateIndex: true, useNewUrlParser:true });
 mongoose.connection.on('connected', () => {
@@ -31,6 +31,7 @@ mongoose.connection.on('error', (err) => {
     console.log("Database error " + err);
 });
 
+userRoutes(app);
 app.use('/users', userRoutes);
 
 app.set('trust proxy', 1);
