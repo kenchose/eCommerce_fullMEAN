@@ -76,7 +76,6 @@
 			<!-- <p><button type="submit" class='btn btn-danger' [disabled]='formData.invalid'>Create</button></p> -->
 		</div>
 	</form>
-<<<<<<< HEAD
 
         <hr>
         
@@ -84,35 +83,32 @@
             <p><i class="fas fa-times"></i> {{error}}</p>
         </div>  
 
-        <form (submit)='componentSignIn(this.oldUser)' #formLog='ngForm'>
-        <div class="form-group row justify-content-center">
-            <div class="col-md-8">
-                <input type="email" class="form-control" placeholder='Email' 
-                required
-                name='oldUser.email' 
-                [(ngModel)]='oldUser.email' 
-                #emailLog='ngModel'>
-            </div>
-        </div>     
-        <div class="form-group row justify-content-center">
-            <div class="col-md-8">
-                <input type="password" class="form-control" placeholder="Password" 
-                required
-                name='oldUser.password' 
-                [(ngModel)]='oldUser.password' 
-                #passwordLog='ngModel'>
-            </div>
-        </div>     
-        <div class='row justify-content-center'>
-            <p><button type="submit" class='btn btn-primary' [disabled]='formLog.invalid'>Log In</button></p>
-        </div>
-        </form>
+	<form (submit)='componentSignIn(this.oldUser)' #formLog='ngForm'>
+	<div class="form-group row justify-content-center">
+		<div class="col-md-8">
+			<input type="email" class="form-control" placeholder='Email' 
+			required
+			name='oldUser.email' 
+			[(ngModel)]='oldUser.email' 
+			#emailLog='ngModel'>
+		</div>
+	</div>     
+	<div class="form-group row justify-content-center">
+		<div class="col-md-8">
+			<input type="password" class="form-control" placeholder="Password" 
+			required
+			name='oldUser.password' 
+			[(ngModel)]='oldUser.password' 
+			#passwordLog='ngModel'>
+		</div>
+	</div>     
+	<div class='row justify-content-center'>
+		<p><button type="submit" class='btn btn-primary' [disabled]='formLog.invalid'>Log In</button></p>
+	</div>
+	</form>
         <!-- {{csrfToken}} -->
-    </div>
-=======
 </div>
 
-        <div *ngFor='let error of errors'>
-            <p><i class="fas fa-times"></i> {{error}}</p>
-        </div>  
->>>>>>> origin/master
+<div *ngFor='let error of errors'>
+	<p><i class="fas fa-times"></i> {{error}}</p>
+</div>  

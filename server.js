@@ -16,12 +16,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(expressValidator());
-app.use(session({
-    secret: 'thisisasecret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {maxAge: 60000}
-}))
+// app.use(session({
+//     secret: 'thisisasecret',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {maxAge: 60000}
+// }))
 
 mongoose.connect(mongooseDatabase.database, { useCreateIndex: true, useNewUrlParser:true });
 mongoose.connection.on('connected', () => {
@@ -31,8 +31,8 @@ mongoose.connection.on('error', (err) => {
     console.log("Database error " + err);
 });
 
-userRoutes(app);
 app.use('/users', userRoutes);
+userRoutes(app);
 
 app.set('trust proxy', 1);
 
@@ -42,9 +42,9 @@ app.use(cors());
 app.use(flash());
 
 //Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session()); //don't need express-session if using passport.session
-require('./server/config/passport')(passport);
+// app.use(passport.initialize());
+// app.use(passport.session()); //don't need express-session if using passport.session
+// require('./server/config/passport')(passport);
 
 // Set Static Folder //
 app.use(express.static(__dirname + '/dist/public'));

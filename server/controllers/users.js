@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 let User = mongoose.model('User');
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const passport = require('passport');
+// const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const database = require('./../config/mongoose');
 
@@ -16,6 +16,20 @@ module.exports = {
             }
         })
     },
+    //Format of token 
+        //Authorization: Bearer <access token>
+    //Verify Token
+    // function verifyToken(req, res, next){
+    //     //Get auth header value
+    //     let bearerHeader = req.headers['autherization'];
+    //     //Check if beaer is undefined
+    //     if(typeof bearerHeader != 'undefined'){
+
+    //     } else {
+    //         //Forbidden
+    //         res.sendStatus(403).send("This is forbidden cuz of no token"); //forbidden
+    //     }
+    // }
 
     register: (req, res) => {
         let newUser = new User(req.body);
@@ -37,7 +51,7 @@ module.exports = {
             if (err) {
                 res.json({msg:"Failed to register user.", err});
             } else {
-                res.json({msg:"User successfully registered.", newUser})
+                res.json({msg:"User successfully registered.", userID:newUser._id})
             }
         })
     },
@@ -65,20 +79,23 @@ module.exports = {
                     //     // req.session.save();
                     //     // console.log(util.inspect(req.session, {showHidden: false, depth: null}))
                     //     res.json({message:'User is now logged in', user});
+                    // if (isMatch) {
+                    //     jwt.sign(user.toJSON(), database.secretKey, {expiresIn:'1h'}, (err, token) => { //Expected "payload" to be a plain object.
+                    //         res.json({
+                    //             msg:'User is now logged in', 
+                    //             token:'JWT ' + token,
+                    //             user: {
+                    //                 id:user._id,
+                    //                 email:user.email
+                    //             }
+                    //         });
+                    //     });
                     if (isMatch) {
-                        jwt.sign(user.toJSON(), database.secretKey, {expiresIn:'1h'}, (err, token) => { //Expected "payload" to be a plain object.
-                            res.json({
-                                msg:'User is now logged in', 
-                                token:'JWT ' + token,
-                                user: {
-                                    id:user._id,
-                                    first_name:user.first_name,
-                                    email:user.email
-                                }
-                            });
-                        });
+                        const token = jwt.sign({email:user.email}, database.secretKey); //Expected "payload" to be a plain object.
+                        res.header('auth-token', token).send(token);
                     } else {
-                        res.json({msg:'Invalid email/password'})
+                        res.json({msg:'Invalid email/password'})//create and assign token
+                        // res.json({msg:'User is now logged in'})
                     }
                 })
             }
@@ -86,6 +103,6 @@ module.exports = {
     }, 
 
     profile: (req, res) => {
-        res.json({user:req.user});
+        res.send(req.user);
     }
 }
